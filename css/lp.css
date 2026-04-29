@@ -289,6 +289,8 @@ strong { font-weight: 700; }
    PROBLEMA
 ══════════════════════════════════════════ */
 .lp-pain { background: var(--off-white); }
+.lp-pain .lp-section-header { max-width: 860px; }
+.lp-pain .lp-section-header h2 { font-size: clamp(1rem, 4.5vw, 2.4rem); }
 .lp-pain-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -607,22 +609,19 @@ strong { font-weight: 700; }
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 28px;
-  max-width: 960px;
+  max-width: 700px;
   margin: 0 auto;
 }
 .lp-video-wrap {
-  position: relative;
-  aspect-ratio: 16/9;
   border-radius: var(--radius-lg);
   overflow: hidden;
   background: var(--dark);
   box-shadow: var(--shadow-md);
 }
-.lp-video-wrap iframe {
-  position: absolute;
-  inset: 0;
+.lp-video-wrap video {
+  display: block;
   width: 100%;
-  height: 100%;
+  height: auto;
   border: 0;
 }
 
