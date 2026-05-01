@@ -374,6 +374,7 @@ strong { font-weight: 700; }
    MÉTODO
 ══════════════════════════════════════════ */
 .lp-method { background: var(--white); }
+.lp-method .lp-section-header h2 { font-size: clamp(1.6rem, 3.2vw, 2.2rem); }
 .lp-pillars {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
