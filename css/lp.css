@@ -950,63 +950,121 @@ strong { font-weight: 700; }
    RESPONSIVE — 768px
 ══════════════════════════════════════════ */
 @media (max-width: 768px) {
-  .lp-section { padding: 60px 0; }
+  .lp-section { padding: 56px 0; }
 
-  .lp-hero { padding: 56px 0 52px; }
-  .lp-hero-visual { display: none; }
-  .lp-hero-content .lp-btn-primary { align-self: stretch; }
+  /* Topbar */
+  .lp-topbar-inner  { font-size: .72rem; gap: 8px; }
+  .lp-topbar-sep    { display: none; }
 
-  .lp-trust-inner   { gap: 0; }
-  .lp-trust-item    { padding: 10px 20px; }
-  .lp-trust-sep     { height: 32px; }
+  /* Hero */
+  .lp-hero          { padding: 52px 0 56px; }
+  .lp-hero-visual   { display: none; }
+  .lp-hero-content .lp-btn-primary { align-self: stretch; text-align: center; }
+  .lp-hero-content h1 { font-size: clamp(2rem, 7vw, 2.8rem); }
+  .lp-hero-sub      { font-size: 1rem; max-width: 100%; }
 
+  /* Trust bar */
+  .lp-trust-inner   { gap: 0; flex-wrap: wrap; }
+  .lp-trust-item    { padding: 10px 20px; min-width: 45%; }
+  .lp-trust-sep     { display: none; }
+
+  /* Dor */
   .lp-pain-grid     { grid-template-columns: 1fr; }
+
+  /* Mercado */
+  .lp-market-inner  { padding: 0 24px; }
+  .lp-market-inner h2 { font-size: clamp(1.6rem, 5vw, 2.2rem); }
+
+  /* Método */
   .lp-pillars       { grid-template-columns: 1fr; margin-bottom: 40px; }
-  .lp-curr-list     { grid-template-columns: 1fr; }
-  .lp-forwhom-grid  { grid-template-columns: 1fr; }
-  .lp-videos-grid   { grid-template-columns: 1fr; }
-  .lp-wa-grid       { columns: 2; }
+  .lp-tan-block     { grid-template-columns: 1fr; text-align: center; padding: 28px; }
+  .lp-tan-img-wrap  { width: 100px; margin: 0 auto; }
+  .lp-quote         { text-align: left; }
 
-  .lp-tan-block {
-    grid-template-columns: 1fr;
-    text-align: center;
-    padding: 28px;
-  }
-  .lp-tan-img-wrap {
-    width: 100px;
-    margin: 0 auto;
-  }
-  .lp-quote { text-align: left; }
-
+  /* Mentor */
   .lp-mentor-inner  { grid-template-columns: 1fr; }
   .lp-mentor-img    { max-height: 300px; aspect-ratio: 3/2; }
   .lp-mentor-img img { object-position: center 20%; }
 
-  .lp-benefits-grid { grid-template-columns: 1fr; }
+  /* Currículo */
+  .lp-curr-list     { grid-template-columns: 1fr; }
 
+  /* Benefícios */
+  .lp-benefits-grid { grid-template-columns: repeat(2, 1fr); }
+
+  /* Para quem é */
+  .lp-forwhom-grid  { grid-template-columns: 1fr; }
+
+  /* Vídeos */
+  .lp-videos-grid   { grid-template-columns: 1fr; }
+
+  /* WhatsApp */
+  .lp-wa-grid       { columns: 2; }
+
+  /* Preço */
+  .lp-pricing-single { max-width: 100%; }
   .lp-roi-grid      { grid-template-columns: 1fr; }
   .lp-roi-item      { border-right: none; border-bottom: 1px solid var(--border); }
   .lp-roi-item:last-child { border-bottom: none; }
 
-  .lp-topbar-inner  { font-size: .72rem; gap: 8px; }
-  .lp-topbar-sep    { display: none; }
+  /* CTA final */
+  .lp-cta-final     { padding: 72px 0; }
+  .lp-cta-final h2  { font-size: clamp(1.6rem, 5vw, 2.4rem); }
+
+  /* FAQ */
+  .lp-faq-q         { font-size: .93rem; padding: 18px 20px; }
+  .lp-faq-a p       { padding: 0 20px 18px; }
 }
 
 /* ══════════════════════════════════════════
    RESPONSIVE — 480px
 ══════════════════════════════════════════ */
 @media (max-width: 480px) {
-  .lp-hero-content h1   { font-size: 1.9rem; }
-  .lp-container         { padding: 0 16px; }
-  .lp-pain-card         { flex-direction: column; gap: 12px; }
-  .lp-trust-item        { padding: 8px 14px; }
-  .lp-trust-sep         { display: none; }
-  .lp-trust-inner       { gap: 4px; flex-direction: row; justify-content: center; flex-wrap: wrap; }
+  .lp-section       { padding: 48px 0; }
+  .lp-container     { padding: 0 16px; }
+
+  /* Hero */
+  .lp-hero          { padding: 44px 0 48px; }
+  .lp-hero-content h1 { font-size: clamp(1.75rem, 7.5vw, 2.2rem); }
+  .lp-hero-sub      { font-size: .95rem; }
+  .lp-hero-disclaimer { font-size: .75rem; }
+
+  /* Trust bar */
+  .lp-trust-inner   { flex-direction: row; justify-content: center; flex-wrap: wrap; gap: 4px; }
+  .lp-trust-item    { padding: 8px 14px; min-width: 44%; }
+  .lp-trust-item strong { font-size: 1.1rem; }
+  .lp-trust-item span   { font-size: .65rem; }
+
+  /* Dor */
+  .lp-pain-card     { flex-direction: column; gap: 12px; }
+
+  /* Mercado */
+  .lp-market-callout { font-size: .92rem; padding: 14px 18px; }
+  .lp-market-inner h2 { font-size: clamp(1.5rem, 6.5vw, 2rem); }
+
+  /* Método */
+  .lp-tan-block     { padding: 20px; }
+
+  /* Benefícios */
+  .lp-benefits-grid { grid-template-columns: 1fr; }
+
+  /* WhatsApp */
+  .lp-wa-grid       { columns: 1; }
+
+  /* Preço */
+  .lp-price-install strong { font-size: 2.2rem; }
+  .lp-btn-lg        { font-size: .97rem; padding: 14px 28px; }
+
+  /* CTA final */
+  .lp-cta-final     { padding: 56px 0; }
+
+  /* WhatsApp float */
   .lp-whatsapp-float    { bottom: 20px; right: 20px; width: 52px; height: 52px; }
   .lp-whatsapp-float svg { width: 26px; height: 26px; }
-  .lp-market-callout    { font-size: .95rem; }
-  .lp-wa-grid           { columns: 1; }
-  .lp-tan-block         { padding: 20px; }
+
+  /* Section header */
+  .lp-section-header { margin-bottom: 40px; }
+  .lp-section-header h2 { font-size: clamp(1.5rem, 6vw, 2rem); }
 }
 
 /* ══════════════════════════════════════════
