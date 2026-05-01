@@ -241,7 +241,7 @@ strong { font-weight: 700; }
 }
 .lp-hero-badge img { width: 40px; height: 40px; object-fit: contain; filter: brightness(0) invert(1); flex-shrink: 0; }
 .lp-hero-badge strong { display: block; color: var(--white); font-size: .9rem; font-family: var(--ff-head); }
-.lp-hero-badge span  { color: rgba(255,255,255,.55); font-size: .75rem; }
+.lp-hero-badge span  { color: rgba(255,255,255,.55); font-size: .65rem; }
 
 /* ══════════════════════════════════════════
    TRUST BAR
@@ -290,7 +290,7 @@ strong { font-weight: 700; }
 ══════════════════════════════════════════ */
 .lp-pain { background: var(--off-white); }
 .lp-pain .lp-section-header { max-width: 860px; }
-.lp-pain .lp-section-header h2 { font-size: clamp(1rem, 4.5vw, 2.4rem); }
+.lp-pain .lp-section-header h2 { font-size: clamp(1rem, 3vw, 1.85rem); }
 .lp-pain-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -496,7 +496,7 @@ strong { font-weight: 700; }
 ══════════════════════════════════════════ */
 .lp-curriculum { background: var(--dark); }
 .lp-curriculum .lp-section-header h2 { color: var(--white); }
-.lp-curriculum .lp-section-header p  { color: rgba(255,255,255,.6); }
+.lp-curriculum .lp-section-header p  { color: rgba(255,255,255,.6); font-size: .9rem; }
 .lp-curr-list {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -521,6 +521,17 @@ strong { font-weight: 700; }
   margin-top: 2px;
 }
 .lp-curr-check svg { width: 12px; height: 12px; stroke: var(--white); }
+.lp-curr-label {
+  text-align: left;
+  font-family: var(--ff-head);
+  font-size: .72rem;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--red);
+  max-width: 880px;
+  margin: 0 auto 12px;
+}
 .lp-curr-cta { text-align: center; }
 
 /* ══════════════════════════════════════════
@@ -623,6 +634,25 @@ strong { font-weight: 700; }
   width: 100%;
   height: auto;
   border: 0;
+}
+
+/* ══════════════════════════════════════════
+   DEPOIMENTOS WHATSAPP
+══════════════════════════════════════════ */
+.lp-wadepos { background: var(--dark); }
+.lp-wadepos .lp-section-header h2 { color: var(--white); }
+.lp-wadepos .lp-section-header p  { color: rgba(255,255,255,.6); }
+.lp-wa-grid {
+  columns: 3;
+  column-gap: 20px;
+}
+.lp-wa-img {
+  display: block;
+  width: 100%;
+  border-radius: var(--radius-md);
+  margin-bottom: 20px;
+  break-inside: avoid;
+  box-shadow: 0 4px 24px rgba(0,0,0,.55);
 }
 
 /* ══════════════════════════════════════════
@@ -934,6 +964,7 @@ strong { font-weight: 700; }
   .lp-curr-list     { grid-template-columns: 1fr; }
   .lp-forwhom-grid  { grid-template-columns: 1fr; }
   .lp-videos-grid   { grid-template-columns: 1fr; }
+  .lp-wa-grid       { columns: 2; }
 
   .lp-tan-block {
     grid-template-columns: 1fr;
@@ -973,6 +1004,7 @@ strong { font-weight: 700; }
   .lp-whatsapp-float    { bottom: 20px; right: 20px; width: 52px; height: 52px; }
   .lp-whatsapp-float svg { width: 26px; height: 26px; }
   .lp-market-callout    { font-size: .95rem; }
+  .lp-wa-grid           { columns: 1; }
   .lp-tan-block         { padding: 20px; }
 }
 
