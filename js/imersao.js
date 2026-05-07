@@ -101,13 +101,8 @@
         profissao: (form.querySelector('[name="profissao"]') || {}).value || ''
       };
 
-      fetch(SHEETS_URL, {
-        method: 'POST',
-        mode: 'no-cors',
-        body: new URLSearchParams(data)
-      }).finally(function () {
-        window.location.href = 'obrigado.html';
-      });
+      navigator.sendBeacon(SHEETS_URL, new URLSearchParams(data));
+      window.location.href = 'obrigado.html';
     });
   }
 
