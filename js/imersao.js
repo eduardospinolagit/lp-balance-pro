@@ -77,7 +77,7 @@
   });
 
   /* ── Submissão dos formulários ── */
-  var SHEETS_URL = 'https://script.google.com/macros/s/AKfycbwrLYAbupk_gU0EHKMe2vHOztqHYPRrn49ALrR3hYSCB78KfCW6lhFh8FMIODmnm0Hj/exec';
+  var SHEETS_URL = 'https://script.google.com/macros/s/AKfycbx62CaDFcpb_YCLuV1K58O9lUlXQynPyNg6gikWWDEgW1fwgEuUWLDQIZiX46rv1CQ/exec';
 
   function handleSubmit(form) {
     form.addEventListener('submit', function (e) {
@@ -101,8 +101,11 @@
         profissao: (form.querySelector('[name="profissao"]') || {}).value || ''
       };
 
-      navigator.sendBeacon(SHEETS_URL, new URLSearchParams(data));
-      window.location.href = 'obrigado.html';
+      var pixel = new Image();
+      pixel.src = SHEETS_URL + '?' + new URLSearchParams(data).toString();
+      setTimeout(function () {
+        window.location.href = 'obrigado.html';
+      }, 400);
     });
   }
 
