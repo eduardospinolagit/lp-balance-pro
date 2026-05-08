@@ -77,7 +77,7 @@
   });
 
   /* ── Submissão dos formulários ── */
-  var SHEETS_URL = 'https://script.google.com/macros/s/AKfycbx62CaDFcpb_YCLuV1K58O9lUlXQynPyNg6gikWWDEgW1fwgEuUWLDQIZiX46rv1CQ/exec';
+  var SHEETS_URL = 'https://script.google.com/macros/s/AKfycbyJmb6HiCUYPtRH0pSluiejxpdGvp8WALoPg8R-q5K-LWdj4zwPd5UyrmF33qbtHzw6/exec';
 
   function handleSubmit(form) {
     form.addEventListener('submit', function (e) {
