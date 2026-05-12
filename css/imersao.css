@@ -1225,7 +1225,7 @@ strong { font-weight: 700; }
   .im-section { padding: 60px 0; }
 
   /* ── Hero ── */
-  .im-hero             { padding: 0 0 8px; }
+  .im-hero             { padding: 0 0 8px; overflow: visible; }
   .im-hero-right       { position: relative; max-height: 300px; overflow: visible; }
   .im-hero-cutout-wrap {
     height: 300px;
