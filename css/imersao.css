@@ -788,6 +788,14 @@ strong { font-weight: 700; }
 
 /* Vídeo 9:16 */
 .im-about-video-wrap { width: 100%; }
+.im-video {
+  display: block;
+  width: 100%;
+  aspect-ratio: 9 / 16;
+  border-radius: 16px;
+  background: #000;
+  object-fit: cover;
+}
 
 .im-video-placeholder {
   aspect-ratio: 9 / 16;
