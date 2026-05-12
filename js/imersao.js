@@ -147,8 +147,9 @@
     setInterval(tick, 1000);
   }());
 
-  /* ── Carrossel infinito de depoimentos ── */
+  /* ── Carrossel infinito de depoimentos (mobile only) ── */
   (function () {
+    if (!window.matchMedia('(max-width: 768px)').matches) return;
     var grid = document.querySelector('.im-depos-grid');
     if (!grid) return;
 
