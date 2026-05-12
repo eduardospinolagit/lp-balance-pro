@@ -103,6 +103,7 @@
 
       var pixel = new Image();
       pixel.src = SHEETS_URL + '?' + new URLSearchParams(data).toString();
+      if (typeof fbq === 'function') fbq('track', 'Lead');
       setTimeout(function () {
         window.location.href = 'obrigado.html';
       }, 400);
@@ -144,6 +145,54 @@
 
     tick();
     setInterval(tick, 1000);
+  }());
+
+  /* ── Carrossel infinito de depoimentos ── */
+  (function () {
+    var grid = document.querySelector('.im-depos-grid');
+    if (!grid) return;
+
+    var originals = Array.from(grid.querySelectorAll('img'));
+    var n = originals.length;
+    if (n < 2) return;
+
+    /* Wrapper para as setinhas */
+    var wrap = document.createElement('div');
+    wrap.className = 'im-depos-wrap';
+    grid.parentNode.insertBefore(wrap, grid);
+    wrap.appendChild(grid);
+
+    for (var i = n - 1; i >= 0; i--) {
+      grid.insertBefore(originals[i].cloneNode(true), grid.firstChild);
+    }
+    for (var j = 0; j < n; j++) {
+      grid.appendChild(originals[j].cloneNode(true));
+    }
+
+    function itemWidth() {
+      var img = grid.querySelector('img');
+      return img ? img.offsetWidth + 10 : 0;
+    }
+
+    grid.scrollLeft = n * itemWidth();
+
+    function reposition() {
+      var iw   = itemWidth();
+      var setW = n * iw;
+      var sl   = grid.scrollLeft;
+      if (sl < setW)           grid.scrollLeft = sl + setW;
+      else if (sl >= 2 * setW) grid.scrollLeft = sl - setW;
+    }
+
+    if ('onscrollend' in window) {
+      grid.addEventListener('scrollend', reposition);
+    } else {
+      var t;
+      grid.addEventListener('scroll', function () {
+        clearTimeout(t);
+        t = setTimeout(reposition, 150);
+      });
+    }
   }());
 
   /* ── Smooth scroll para âncoras internas ── */
