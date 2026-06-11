@@ -19,16 +19,32 @@
     });
   });
 
-  /* ── Máscara de telefone ── */
+  /* ── Máscara de telefone (com correção do código de país 55) ── */
+  function soDigitos(s) { return (s || '').replace(/\D/g, ''); }
+
+  // Normaliza número BR removendo lixo de prefixo:
+  //  - 0 de operadora / 00 internacional na frente (ex.: 011, 0021)
+  //  - código do país 55 quando veio junto (12+ dígitos começando em 55)
+  // Mantém DDD 55 real (11 díg. começando em 55, ex.: Santa Maria/RS).
+  function normalizarTelBR(digits) {
+    digits = digits.replace(/^0+/, '');                       // 0 (operadora) / 00 (intl)
+    if (digits.length >= 12 && digits.slice(0, 2) === '55') { // código do país 55
+      digits = digits.slice(2);
+    }
+    digits = digits.replace(/^0+/, '');                       // 0 do DDD, se ainda restou
+    return digits.slice(0, 11);
+  }
+
+  function formatarTelBR(digits) {
+    if (digits.length <= 10) {
+      return digits.replace(/^(\d{2})(\d{4})(\d{0,4}).*/, '($1) $2-$3');
+    }
+    return digits.replace(/^(\d{2})(\d{5})(\d{0,4}).*/, '($1) $2-$3');
+  }
+
   function maskPhone(input) {
     input.addEventListener('input', function () {
-      var v = input.value.replace(/\D/g, '').slice(0, 11);
-      if (v.length <= 10) {
-        v = v.replace(/^(\d{2})(\d{4})(\d{0,4}).*/, '($1) $2-$3');
-      } else {
-        v = v.replace(/^(\d{2})(\d{5})(\d{0,4}).*/, '($1) $2-$3');
-      }
-      input.value = v;
+      input.value = formatarTelBR(normalizarTelBR(soDigitos(input.value)));
     });
   }
   document.querySelectorAll('input[name="whatsapp"]').forEach(maskPhone);
@@ -96,17 +112,31 @@
 
       var data = {
         nome:      (form.querySelector('[name="nome"]')      || {}).value || '',
-        whatsapp:  (form.querySelector('[name="whatsapp"]')  || {}).value || '',
+        whatsapp:  formatarTelBR(normalizarTelBR(soDigitos((form.querySelector('[name="whatsapp"]') || {}).value))),
         email:     (form.querySelector('[name="email"]')     || {}).value || '',
         profissao: (form.querySelector('[name="profissao"]') || {}).value || ''
       };
 
-      var pixel = new Image();
-      pixel.src = SHEETS_URL + '?' + new URLSearchParams(data).toString();
-      if (typeof fbq === 'function') fbq('track', 'Lead');
-      setTimeout(function () {
+      // ── Lead (Meta) com eventID — pronto pra deduplicar com a CAPI no futuro ──
+      var eventId = 'lead-' + Date.now() + '-' + Math.random().toString(36).slice(2, 10);
+      if (typeof fbq === 'function') {
+        fbq('track', 'Lead', {}, { eventID: eventId });
+      }
+
+      // ── Registro na planilha BLINDADO: só redireciona quando o envio terminar ──
+      // (antes, o redirect em 400ms podia CANCELAR o envio e perder o lead)
+      var redirected = false;
+      function irParaObrigado() {
+        if (redirected) return;
+        redirected = true;
         window.location.href = 'obrigado.html';
-      }, 400);
+      }
+      var pixel = new Image();
+      pixel.onload = irParaObrigado;
+      pixel.onerror = irParaObrigado;
+      pixel.src = SHEETS_URL + '?' + new URLSearchParams(data).toString();
+      // rede de segurança: redireciona mesmo se a planilha demorar
+      setTimeout(irParaObrigado, 2500);
     });
   }
 
@@ -213,3 +243,74 @@
   });
 
 })();
+
+/* ══════════════════════════════════════════════════════════
+   RASTREAMENTO DE ENGAJAMENTO — eventos personalizados (Meta)
+   Tudo por CÓDIGO. NÃO ligar a detecção automática de eventos
+   (foi ela que causou a duplicação de Lead/CompleteRegistration).
+   ══════════════════════════════════════════════════════════ */
+
+/* ── 1) Play no vídeo + marcos de 25/50/75% assistido ── */
+(function () {
+  var video = document.querySelector('.im-video');
+  if (!video) return;
+
+  var played = false;
+  video.addEventListener('play', function () {
+    if (played) return;              // dispara só no 1º play
+    played = true;
+    if (typeof fbq === 'function') {
+      var id = 'vid-' + Date.now() + '-' + Math.random().toString(36).slice(2, 10);
+      fbq('trackCustom', 'VideoPlay', { video: '202605120735.mp4' }, { eventID: id });
+    }
+  });
+
+  var marcosVid = { 25: false, 50: false, 75: false };
+  video.addEventListener('timeupdate', function () {
+    if (!video.duration) return;
+    var pct = (video.currentTime / video.duration) * 100;
+    [25, 50, 75].forEach(function (m) {
+      if (!marcosVid[m] && pct >= m) {
+        marcosVid[m] = true;
+        if (typeof fbq === 'function') {
+          fbq('trackCustom', 'VideoProgress', { percent: m });
+        }
+      }
+    });
+  });
+}());
+
+/* ── 2) Profundidade de rolagem (leitura da copy): 25/50/75/90% ── */
+(function () {
+  var marcosScroll = { 25: false, 50: false, 75: false, 90: false };
+  function checarScroll() {
+    var h = document.documentElement;
+    var rolavel = h.scrollHeight - h.clientHeight;
+    if (rolavel <= 0) return;
+    var pct = (h.scrollTop / rolavel) * 100;
+    [25, 50, 75, 90].forEach(function (m) {
+      if (!marcosScroll[m] && pct >= m) {
+        marcosScroll[m] = true;
+        if (typeof fbq === 'function') {
+          fbq('trackCustom', 'ScrollDepth', { percent: m });
+        }
+      }
+    });
+  }
+  window.addEventListener('scroll', checarScroll, { passive: true });
+}());
+
+/* ── 3) Chegou na seção de inscrição (#inscricao) ── */
+(function () {
+  var alvo = document.getElementById('inscricao');
+  if (!alvo || !('IntersectionObserver' in window)) return;
+  var obs = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (e.isIntersecting) {
+        if (typeof fbq === 'function') fbq('trackCustom', 'ViewOffer');
+        obs.disconnect();            // dispara 1x só
+      }
+    });
+  }, { threshold: 0.5 });
+  obs.observe(alvo);
+}());
